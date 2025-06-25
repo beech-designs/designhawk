@@ -1,0 +1,621 @@
+/* DesignHawk Chrome Extension - Content Styles */
+
+/* Highlight overlays for QA issues */
+.designhawk-highlight {
+  position: absolute !important;
+  pointer-events: none !important;
+  z-index: 999999 !important;
+  box-sizing: border-box !important;
+  border-style: solid !important;
+  border-width: 2px !important;
+  animation: designhawk-pulse 2s infinite !important;
+  border-radius: 4px !important;
+}
+
+.designhawk-highlight.high-severity {
+  border-color: #ff4444 !important;
+  background-color: rgba(255, 68, 68, 0.1) !important;
+}
+
+.designhawk-highlight.medium-severity {
+  border-color: #ffaa00 !important;
+  background-color: rgba(255, 170, 0, 0.1) !important;
+}
+
+.designhawk-highlight.low-severity {
+  border-color: #44aaff !important;
+  background-color: rgba(68, 170, 255, 0.1) !important;
+}
+
+@keyframes designhawk-pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* QA issue tooltip */
+.designhawk-tooltip {
+  position: absolute !important;
+  background: #142D25 !important;
+  color: white !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  z-index: 1000000 !important;
+  pointer-events: none !important;
+  max-width: 250px !important;
+  word-wrap: break-word !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  line-height: 1.4 !important;
+}
+
+.designhawk-tooltip::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 50% !important;
+  margin-left: -6px !important;
+  border-width: 6px !important;
+  border-style: solid !important;
+  border-color: #142D25 transparent transparent transparent !important;
+}
+
+/* QA measurement overlay */
+.designhawk-measurement {
+  position: absolute !important;
+  pointer-events: none !important;
+  z-index: 999998 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segui UI', Roboto, sans-serif !important;
+  font-size: 11px !important;
+  color: #333 !important;
+}
+
+.designhawk-measurement-line {
+  position: absolute !important;
+  background: #024A43 !important;
+  pointer-events: none !important;
+}
+
+.designhawk-measurement-line.horizontal {
+  height: 1px !important;
+}
+
+.designhawk-measurement-line.vertical {
+  width: 1px !important;
+}
+
+.designhawk-measurement-label {
+  position: absolute !important;
+  background: #024A43 !important;
+  color: white !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  font-size: 10px !important;
+}
+
+/* QA analysis panel (floating) */
+.designhawk-analysis-panel {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  width: 320px !important;
+  background: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+  z-index: 1000001 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 14px !important;
+  display: none !important;
+  border: 1px solid rgba(2, 74, 67, 0.2) !important;
+}
+
+.designhawk-analysis-panel.show {
+  display: block !important;
+}
+
+.designhawk-panel-header {
+  background: linear-gradient(135deg, #024A43 0%, #142D25 100%) !important;
+  color: white !important;
+  padding: 16px !important;
+  border-radius: 12px 12px 0 0 !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.designhawk-panel-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.designhawk-panel-close {
+  background: none !important;
+  border: none !important;
+  color: white !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  padding: 4px !important;
+  border-radius: 4px !important;
+  opacity: 0.8 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.designhawk-panel-close:hover {
+  opacity: 1 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.designhawk-panel-content {
+  padding: 16px !important;
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+
+.designhawk-issue-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  padding: 12px 0 !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.designhawk-issue-item:last-child {
+  border-bottom: none !important;
+}
+
+.designhawk-issue-severity {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  margin-right: 12px !important;
+  margin-top: 4px !important;
+  flex-shrink: 0 !important;
+}
+
+.designhawk-issue-severity.high {
+  background: #ff4444 !important;
+}
+
+.designhawk-issue-severity.medium {
+  background: #ffaa00 !important;
+}
+
+.designhawk-issue-severity.low {
+  background: #44aaff !important;
+}
+
+.designhawk-issue-content {
+  flex: 1 !important;
+}
+
+.designhawk-issue-title {
+  font-weight: 500 !important;
+  margin-bottom: 4px !important;
+  color: #333 !important;
+  font-size: 13px !important;
+}
+
+.designhawk-issue-description {
+  font-size: 12px !important;
+  color: #666 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 4px !important;
+}
+
+.designhawk-issue-element {
+  font-size: 10px !important;
+  color: #999 !important;
+  font-family: 'SF Mono', Monaco, monospace !important;
+  background: #f8f9fa !important;
+  padding: 2px 6px !important;
+  border-radius: 3px !important;
+  display: inline-block !important;
+}
+
+/* QA progress indicator */
+.designhawk-progress {
+  position: fixed !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(20, 45, 37, 0.95) !important;
+  color: white !important;
+  padding: 12px 20px !important;
+  border-radius: 25px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 14px !important;
+  z-index: 1000002 !important;
+  display: none !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+.designhawk-progress.show {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.designhawk-progress-spinner {
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  border-top: 2px solid #ffffff !important;
+  border-radius: 50% !important;
+  animation: designhawk-spin 1s linear infinite !important;
+}
+
+@keyframes designhawk-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* QA color picker overlay */
+.designhawk-color-picker {
+  position: absolute !important;
+  width: 24px !important;
+  height: 24px !important;
+  border: 3px solid white !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  cursor: crosshair !important;
+  z-index: 999999 !important;
+  pointer-events: none !important;
+}
+
+.designhawk-color-picker::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 2px !important;
+  height: 2px !important;
+  background: #333 !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* QA comparison sidebar */
+.designhawk-comparison-sidebar {
+  position: fixed !important;
+  top: 0 !important;
+  right: -380px !important;
+  width: 380px !important;
+  height: 100vh !important;
+  background: white !important;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1000000 !important;
+  transition: right 0.3s ease !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  overflow-y: auto !important;
+}
+
+.designhawk-comparison-sidebar.open {
+  right: 0 !important;
+}
+
+.designhawk-sidebar-header {
+  background: linear-gradient(135deg, #024A43 0%, #142D25 100%) !important;
+  color: white !important;
+  padding: 20px !important;
+  position: sticky !important;
+  top: 0 !important;
+}
+
+.designhawk-sidebar-title {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.designhawk-sidebar-close {
+  position: absolute !important;
+  top: 20px !important;
+  right: 20px !important;
+  background: none !important;
+  border: none !important;
+  font-size: 20px !important;
+  cursor: pointer !important;
+  color: white !important;
+  padding: 4px !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  opacity: 0.8 !important;
+  transition: all 0.2s ease !important;
+}
+
+.designhawk-sidebar-close:hover {
+  opacity: 1 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.designhawk-sidebar-content {
+  padding: 20px !important;
+}
+
+.designhawk-comparison-section {
+  margin-bottom: 24px !important;
+  background: #f8f9fa !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+}
+
+.designhawk-comparison-section h3 {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin: 0 0 12px 0 !important;
+  color: #333 !important;
+}
+
+.designhawk-token-comparison {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid #e9ecef !important;
+}
+
+.designhawk-token-comparison:last-child {
+  border-bottom: none !important;
+}
+
+.designhawk-token-info {
+  flex: 1 !important;
+}
+
+.designhawk-token-label {
+  font-size: 12px !important;
+  color: #666 !important;
+  margin-bottom: 2px !important;
+}
+
+.designhawk-token-value {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  font-family: 'SF Mono', Monaco, monospace !important;
+}
+
+.designhawk-token-status {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 10px !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.designhawk-token-status.match {
+  background: #28a745 !important;
+}
+
+.designhawk-token-status.mismatch {
+  background: #dc3545 !important;
+}
+
+.designhawk-token-status.partial {
+  background: #ffc107 !important;
+  color: #333 !important;
+}
+
+/* QA floating action button */
+.designhawk-fab {
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #024A43 0%, #142D25 100%) !important;
+  border: none !important;
+  color: white !important;
+  font-size: 24px !important;
+  cursor: pointer !important;
+  box-shadow: 0 6px 20px rgba(2, 74, 67, 0.4) !important;
+  z-index: 1000000 !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  display: none !important;
+}
+
+.designhawk-fab.show {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.designhawk-fab:hover {
+  transform: scale(1.1) translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(2, 74, 67, 0.6) !important;
+}
+
+/* QA notification toast */
+.designhawk-toast {
+  position: fixed !important;
+  top: 30px !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-100px) !important;
+  background: white !important;
+  border-radius: 10px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+  padding: 16px 20px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 14px !important;
+  z-index: 1000003 !important;
+  transition: transform 0.3s ease !important;
+  max-width: 400px !important;
+  min-width: 280px !important;
+}
+
+.designhawk-toast.show {
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+.designhawk-toast.success {
+  border-left: 4px solid #28a745 !important;
+}
+
+.designhawk-toast.error {
+  border-left: 4px solid #dc3545 !important;
+}
+
+.designhawk-toast.warning {
+  border-left: 4px solid #ffc107 !important;
+}
+
+.designhawk-toast.info {
+  border-left: 4px solid #024A43 !important;
+}
+
+.designhawk-toast-content {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.designhawk-toast-icon {
+  font-size: 18px !important;
+}
+
+.designhawk-toast-text {
+  flex: 1 !important;
+  line-height: 1.4 !important;
+}
+
+/* QA element selector */
+.designhawk-element-selector {
+  position: absolute !important;
+  pointer-events: none !important;
+  border: 2px dashed #024A43 !important;
+  background: rgba(2, 74, 67, 0.1) !important;
+  z-index: 999997 !important;
+  transition: all 0.1s ease !important;
+}
+
+.designhawk-element-selector::after {
+  content: attr(data-designhawk-info) !important;
+  position: absolute !important;
+  top: -35px !important;
+  left: 0 !important;
+  background: #024A43 !important;
+  color: white !important;
+  padding: 6px 10px !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* QA grid overlay */
+.designhawk-grid-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+  z-index: 999996 !important;
+  opacity: 0.3 !important;
+}
+
+.designhawk-grid-line {
+  position: absolute !important;
+  background: #024A43 !important;
+}
+
+.designhawk-grid-line.vertical {
+  width: 1px !important;
+  height: 100% !important;
+}
+
+.designhawk-grid-line.horizontal {
+  width: 100% !important;
+  height: 1px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .designhawk-analysis-panel {
+    width: calc(100vw - 40px) !important;
+    right: 20px !important;
+  }
+  
+  .designhawk-comparison-sidebar {
+    width: 100vw !important;
+    right: -100vw !important;
+  }
+  
+  .designhawk-comparison-sidebar.open {
+    right: 0 !important;
+  }
+  
+  .designhawk-fab {
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 20px !important;
+  }
+}
+
+/* Hide DesignHawk elements during screenshot */
+.designhawk-screenshot-mode .designhawk-highlight,
+.designhawk-screenshot-mode .designhawk-tooltip,
+.designhawk-screenshot-mode .designhawk-measurement,
+.designhawk-screenshot-mode .designhawk-analysis-panel,
+.designhawk-screenshot-mode .designhawk-progress,
+.designhawk-screenshot-mode .designhawk-comparison-sidebar,
+.designhawk-screenshot-mode .designhawk-fab,
+.designhawk-screenshot-mode .designhawk-toast,
+.designhawk-screenshot-mode .designhawk-element-selector,
+.designhawk-screenshot-mode .designhawk-grid-overlay {
+  display: none !important;
+}
+
+/* Accessibility improvements */
+.designhawk-highlight:focus,
+.designhawk-fab:focus {
+  outline: 2px solid #024A43 !important;
+  outline-offset: 2px !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .designhawk-highlight {
+    border-width: 3px !important;
+  }
+  
+  .designhawk-tooltip {
+    border: 1px solid #fff !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .designhawk-highlight,
+  .designhawk-progress-spinner,
+  .designhawk-fab,
+  .designhawk-toast,
+  .designhawk-comparison-sidebar {
+    animation: none !important;
+    transition: none !important;
+  }
+}

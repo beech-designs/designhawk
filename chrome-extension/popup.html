@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DesignHawk</title>
+  <style>
+    body {
+      width: 380px;
+      min-height: 500px;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #024A43 0%, #142D25 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .header p {
+      margin: 6px 0 0 0;
+      opacity: 0.9;
+      font-size: 12px;
+    }
+    
+    .content {
+      padding: 20px;
+    }
+    
+    .section {
+      margin-bottom: 20px;
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section h3 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .button {
+      width: 100%;
+      padding: 12px;
+      background: #024A43;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .button:hover {
+      background: #142D25;
+      transform: translateY(-1px);
+    }
+    
+    .button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .button.secondary {
+      background: #f0f0f0;
+      color: #333;
+      border: 1px solid #e5e5e5;
+    }
+    
+    .button.secondary:hover {
+      background: #e5e5e5;
+    }
+    
+    .button.danger {
+      background: #dc3545;
+    }
+    
+    .button.danger:hover {
+      background: #c82333;
+    }
+    
+    .button.export {
+      background: #DB783E;
+    }
+    
+    .button.export:hover {
+      background: #AA423A;
+    }
+    
+    .status {
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .status.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+    
+    .results {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 12px;
+      background: #f8f9fa;
+      margin-top: 12px;
+    }
+    
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .metric:last-child {
+      border-bottom: none;
+    }
+    
+    .metric .label {
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .metric .value {
+      color: #666;
+      font-weight: 600;
+    }
+    
+    .metric .value.good {
+      color: #28a745;
+    }
+    
+    .metric .value.warning {
+      color: #ffc107;
+    }
+    
+    .metric .value.error {
+      color: #dc3545;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .loading.show {
+      display: block;
+    }
+    
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #024A43;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .url-display {
+      background: #f8f9fa;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #666;
+      word-break: break-all;
+      margin-bottom: 12px;
+    }
+    
+    .token-count {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .token-stat {
+      text-align: center;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border: 1px solid #e5e5e5;
+    }
+    
+    .token-stat .number {
+      font-size: 18px;
+      font-weight: 600;
+      color: #024A43;
+    }
+    
+    .token-stat .label {
+      font-size: 10px;
+      color: #666;
+      margin-top: 2px;
+    }
+    
+    .comparison-section {
+      background: linear-gradient(135deg, rgba(2, 74, 67, 0.05), rgba(20, 45, 37, 0.1));
+      border: 1px solid #024A43;
+    }
+    
+    .connect-figma {
+      background: #DB783E;
+      margin-bottom: 12px;
+    }
+    
+    .connect-figma:hover {
+      background: #AA423A;
+    }
+    
+    .figma-connected {
+      background: #28a745;
+      cursor: default;
+    }
+    
+    .figma-connected:hover {
+      background: #28a745;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🦅 DesignHawk</h1>
+    <p>Design QA with hawk-eye precision</p>
+  </div>
+  
+  <div class="content">
+    <!-- Current Page Info -->
+    <div class="section">
+      <h3>Current Page</h3>
+      <div id="currentUrl" class="url-display">Loading...</div>
+      <button id="analyzePageBtn" class="button">
+        🔍 Analyze Page Elements
+      </button>
+      <button id="accessibilityBtn" class="button">
+        ♿ Check Accessibility
+      </button>
+    </div>
+    
+    <!-- Figma Connection -->
+    <div class="section">
+      <h3>Figma Integration</h3>
+      <div id="figmaStatus" class="status info" style="display: none;"></div>
+      <button id="connectFigmaBtn" class="button connect-figma">
+        🎨 Connect to Figma
+      </button>
+      <button id="loadTokensBtn" class="button secondary" disabled>
+        📥 Load Design Tokens
+      </button>
+    </div>
+    
+    <!-- Analysis Results -->
+    <div class="section" id="resultsSection" style="display: none;">
+      <h3>Analysis Results</h3>
+      <div id="results" class="results"></div>
+      <div id="tokenCounts" class="token-count" style="display: none;"></div>
+    </div>
+    
+    <!-- Design Comparison -->
+    <div class="section comparison-section" id="comparisonSection" style="display: none;">
+      <h3>Design vs Implementation</h3>
+      <div id="comparisonResults" class="results"></div>
+      <button id="compareBtn" class="button" disabled>
+        ⚖️ Compare with Figma
+      </button>
+      <button id="highlightBtn" class="button secondary" disabled>
+        🎯 Highlight Issues
+      </button>
+    </div>
+    
+    <!-- Export & Actions -->
+    <div class="section" id="actionsSection" style="display: none;">
+      <h3>Export & Actions</h3>
+      <button id="exportReportBtn" class="button export">
+        📋 Export Report
+      </button>
+      <button id="clearHighlightsBtn" class="button secondary">
+        🧹 Clear Highlights
+      </button>
+    </div>
+    
+    <!-- Loading -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div>Analyzing with hawk-eye precision...</div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
