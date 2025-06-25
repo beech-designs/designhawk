@@ -30,6 +30,5 @@
       "resources": ["analyzer.js"],
       "matches": ["<all_urls>"]
     }
-  ],
-  }
+  ]
 }
