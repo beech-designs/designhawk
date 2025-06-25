@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DesignHawk</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 12px;
+      line-height: 1.4;
+      background: #f0f0f0;
+      color: #333;
+    }
+    
+    .container {
+      padding: 16px;
+      max-width: 400px;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #024A43 0%, #142D25 100%);
+      color: white;
+      padding: 16px;
+      margin: -16px -16px 16px -16px;
+      border-radius: 0;
+      text-align: center;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .header p {
+      margin: 4px 0 0 0;
+      opacity: 0.9;
+      font-size: 11px;
+    }
+    
+    .section {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid #e5e5e5;
+    }
+    
+    .section h3 {
+      margin: 0 0 12px 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .button {
+      width: 100%;
+      padding: 10px 12px;
+      background: #024A43;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: background-color 0.2s;
+    }
+    
+    .button:hover {
+      background: #142D25;
+    }
+    
+    .button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .button.secondary {
+      background: #f0f0f0;
+      color: #333;
+      border: 1px solid #e5e5e5;
+    }
+    
+    .button.secondary:hover {
+      background: #e5e5e5;
+    }
+    
+    .button.export {
+      background: #DB783E;
+    }
+    
+    .button.export:hover {
+      background: #AA423A;
+    }
+    
+    .input-group {
+      margin-bottom: 12px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 500;
+      font-size: 11px;
+      color: #666;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    
+    .input-group input:focus {
+      outline: none;
+      border-color: #024A43;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 12px 8px;
+      background: #f8f9fa;
+      border-radius: 6px;
+      border: 1px solid #e5e5e5;
+    }
+    
+    .stat-number {
+      font-size: 18px;
+      font-weight: 600;
+      color: #024A43;
+      margin-bottom: 2px;
+    }
+    
+    .stat-label {
+      font-size: 10px;
+      color: #666;
+    }
+    
+    .status {
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+    
+    .status.success {
+      background: #e8f5e8;
+      color: #2d5a2d;
+      border: 1px solid #c3e6c3;
+    }
+    
+    .status.error {
+      background: #fde8e8;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .status.info {
+      background: #e8f4fd;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+    
+    .results {
+      background: #f8f9fa;
+      border: 1px solid #e5e5e5;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 11px;
+      margin-top: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      display: none;
+    }
+    
+    .loading.show {
+      display: block;
+    }
+    
+    .spinner {
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #024A43;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 8px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .token-preview {
+      margin-top: 12px;
+    }
+    
+    .token-group {
+      margin-bottom: 16px;
+    }
+    
+    .token-group h4 {
+      margin: 0 0 8px 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .color-tokens {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+      gap: 6px;
+    }
+    
+    .color-token {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      border: 1px solid #e5e5e5;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .color-token::after {
+      content: attr(data-hex);
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 8px;
+      color: #666;
+      white-space: nowrap;
+    }
+    
+    .font-tokens .font-token {
+      padding: 6px;
+      margin-bottom: 6px;
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+    
+    .font-family {
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .font-details {
+      color: #666;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🦅 DesignHawk</h1>
+      <p>Extract design tokens with hawk-eye precision</p>
+    </div>
+    
+    <div class="section">
+      <h3>Current Selection</h3>
+      <div id="selectionInfo">Select elements to analyze design tokens</div>
+      <button id="analyzeSelection" class="button">Analyze Selection</button>
+      <button id="analyzePage" class="button secondary">Analyze Entire Page</button>
+    </div>
+    
+    <div class="section">
+      <h3>Design Tokens</h3>
+      <div class="stats-grid" id="tokenStats" style="display: none;">
+        <div class="stat-item">
+          <div class="stat-number" id="colorCount">0</div>
+          <div class="stat-label">Colors</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="fontCount">0</div>
+          <div class="stat-label">Fonts</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="spacingCount">0</div>
+          <div class="stat-label">Spacing</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="componentCount">0</div>
+          <div class="stat-label">Components</div>
+        </div>
+      </div>
+      
+      <div id="tokenPreview" style="display: none;" class="token-preview">
+        <div id="colorTokens" class="token-group" style="display: none;">
+          <h4>Colors</h4>
+          <div class="color-tokens"></div>
+        </div>
+        
+        <div id="fontTokens" class="token-group" style="display: none;">
+          <h4>Typography</h4>
+          <div class="font-tokens"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h3>Export & Sync</h3>
+      <div class="input-group">
+        <label for="projectUrl">Website URL (optional)</label>
+        <input type="url" id="projectUrl" placeholder="https://example.com">
+      </div>
+      <button id="exportCSS" class="button export" disabled>Export as CSS</button>
+      <button id="exportJSON" class="button export" disabled>Export as JSON</button>
+      <button id="syncBackend" class="button secondary" disabled>Sync with Backend</button>
+    </div>
+    
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div>Processing...</div>
+    </div>
+    
+    <div class="section" id="resultsSection" style="display: none;">
+      <h3>Results</h3>
+      <div id="results" class="results"></div>
+    </div>
+    
+    <div class="section" id="statusSection" style="display: none;">
+      <div id="status" class="status"></div>
+    </div>
+  </div>
+  
+  <script>
+    // DesignHawk Figma Plugin UI Script
+    class FigmaQATool {
+      constructor() {
+        this.designTokens = null;
+        this.selectedElements = [];
+        this.init();
+      }
+      
+      init() {
+        // Bind event listeners
+        document.getElementById('analyzeSelection').addEventListener('click', () => this.analyzeSelection());
+        document.getElementById('analyzePage').addEventListener('click', () => this.analyzePage());
+        document.getElementById('exportCSS').addEventListener('click', () => this.exportCSS());
+        document.getElementById('exportJSON').addEventListener('click', () => this.exportJSON());
+        document.getElementById('syncBackend').addEventListener('click', () => this.syncWithBackend());
+        
+        // Listen for messages from plugin code
+        window.onmessage = (event) => {
+          const { type, data } = event.data.pluginMessage;
+          this.handleMessage(type, data);
+        };
+        
+        // Request initial selection info
+        this.requestSelectionInfo();
+      }
+      
+      requestSelectionInfo() {
+        parent.postMessage({ pluginMessage: { type: 'get-selection' } }, '*');
+      }
+      
+      analyzeSelection() {
+        this.showLoading(true);
+        parent.postMessage({ pluginMessage: { type: 'analyze-selection' } }, '*');
+      }
+      
+      analyzePage() {
+        this.showLoading(true);
+        parent.postMessage({ pluginMessage: { type: 'analyze-page' } }, '*');
+      }
+      
+      exportCSS() {
+        if (!this.designTokens) return;
+        parent.postMessage({ pluginMessage: { type: 'export-css' } }, '*');
+      }
+      
+      exportJSON() {
+        if (!this.designTokens) return;
+        
+        const jsonData = JSON.stringify(this.designTokens, null, 2);
+        this.downloadFile('design-tokens.json', jsonData);
+        this.showStatus('Design tokens exported as JSON', 'success');
+      }
+      
+      syncWithBackend() {
+        if (!this.designTokens) return;
+        
+        const projectUrl = document.getElementById('projectUrl').value;
+        this.showLoading(true);
+        
+        parent.postMessage({ 
+          pluginMessage: { 
+            type: 'sync-backend', 
+            tokens: this.designTokens,
+            projectUrl: projectUrl
+          } 
+        }, '*');
+      }
+      
+      handleMessage(type, data) {
+        switch (type) {
+          case 'selection-info':
+            this.updateSelectionInfo(data);
+            break;
+          case 'analysis-complete':
+            this.displayAnalysisResults(data);
+            break;
+          case 'css-generated':
+            this.downloadFile('design-tokens.css', data.css);
+            this.showStatus('CSS tokens exported successfully', 'success');
+            break;
+          case 'sync-complete':
+            this.showLoading(false);
+            if (data.success) {
+              this.showStatus('Successfully synced with backend', 'success');
+            } else {
+              this.showStatus('Sync failed: ' + data.error, 'error');
+            }
+            break;
+          case 'error':
+            this.showError(data.message);
+            break;
+        }
+      }
+      
+      updateSelectionInfo(data) {
+        const info = document.getElementById('selectionInfo');
+        if (data.count === 0) {
+          info.textContent = 'No elements selected - select some elements or analyze entire page';
+        } else {
+          info.textContent = `${data.count} element${data.count === 1 ? '' : 's'} selected`;
+        }
+        this.selectedElements = data.elements || [];
+      }
+      
+      displayAnalysisResults(data) {
+        this.showLoading(false);
+        this.designTokens = data;
+        
+        // Update statistics
+        this.updateTokenStats(data);
+        
+        // Show token preview
+        this.showTokenPreview(data);
+        
+        // Enable export buttons
+        document.getElementById('exportCSS').disabled = false;
+        document.getElementById('exportJSON').disabled = false;
+        document.getElementById('syncBackend').disabled = false;
+        
+        // Show results summary
+        this.displayResults(data);
+      }
+      
+      updateTokenStats(data) {
+        document.getElementById('colorCount').textContent = data.colors?.length || 0;
+        document.getElementById('fontCount').textContent = data.fonts?.length || 0;
+        document.getElementById('spacingCount').textContent = data.spacing?.length || 0;
+        document.getElementById('componentCount').textContent = data.components?.length || 0;
+        
+        document.getElementById('tokenStats').style.display = 'grid';
+      }
+      
+      showTokenPreview(data) {
+        const preview = document.getElementById('tokenPreview');
+        
+        // Show colors
+        if (data.colors && data.colors.length > 0) {
+          const colorContainer = document.getElementById('colorTokens');
+          const colorGrid = colorContainer.querySelector('.color-tokens');
+          
+          colorGrid.innerHTML = '';
+          data.colors.slice(0, 12).forEach(color => {
+            const colorDiv = document.createElement('div');
+            colorDiv.className = 'color-token';
+            colorDiv.style.backgroundColor = color.hex;
+            colorDiv.setAttribute('data-hex', color.hex);
+            colorDiv.title = `${color.name || color.hex}\nFrom: ${color.source}`;
+            colorGrid.appendChild(colorDiv);
+          });
+          
+          colorContainer.style.display = 'block';
+        }
+        
+        // Show fonts
+        if (data.fonts && data.fonts.length > 0) {
+          const fontContainer = document.getElementById('fontTokens');
+          const fontsList = fontContainer.querySelector('.font-tokens');
+          
+          fontsList.innerHTML = '';
+          data.fonts.slice(0, 6).forEach(font => {
+            const fontDiv = document.createElement('div');
+            fontDiv.className = 'font-token';
+            fontDiv.innerHTML = `
+              <div class="font-family" style="font-family: ${font.family};">${font.family}</div>
+              <div class="font-details">${font.size}px • ${font.weight} • ${font.style}</div>
+            `;
+            fontsList.appendChild(fontDiv);
+          });
+          
+          fontContainer.style.display = 'block';
+        }
+        
+        preview.style.display = 'block';
+      }
+      
+      displayResults(data) {
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsDiv = document.getElementById('results');
+        
+        let html = `
+          <div><strong>Analysis Complete</strong></div>
+          <div>Elements analyzed: ${data.elements?.length || 0}</div>
+          <div>Colors extracted: ${data.colors?.length || 0}</div>
+          <div>Font styles: ${data.fonts?.length || 0}</div>
+          <div>Spacing values: ${data.spacing?.length || 0}</div>
+          <div>Border radius: ${data.borderRadius?.length || 0}</div>
+          <div>Shadows: ${data.shadows?.length || 0}</div>
+          <div>Components: ${data.components?.length || 0}</div>
+        `;
+        
+        resultsDiv.innerHTML = html;
+        resultsSection.style.display = 'block';
+      }
+      
+      showStatus(message, type) {
+        const statusSection = document.getElementById('statusSection');
+        const statusDiv = document.getElementById('status');
+        
+        statusDiv.textContent = message;
+        statusDiv.className = `status ${type}`;
+        statusSection.style.display = 'block';
+        
+        setTimeout(() => {
+          statusSection.style.display = 'none';
+        }, 4000);
+      }
+      
+      showError(message) {
+        this.showLoading(false);
+        this.showStatus(`Error: ${message}`, 'error');
+      }
+      
+      showLoading(show) {
+        document.getElementById('loading').classList.toggle('show', show);
+      }
+      
+      downloadFile(filename, content) {
+        // This would trigger a download in a real browser environment
+        // In Figma plugin, we'll just copy to clipboard
+        this.copyToClipboard(content);
+        this.showStatus(`${filename} content copied to clipboard`, 'info');
+      }
+      
+      copyToClipboard(text) {
+        // Create temporary textarea for copying
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+    }
+    
+    // Initialize the tool
+    new FigmaQATool();
+  </script>
+</body>
+</html>
